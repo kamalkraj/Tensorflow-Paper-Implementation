@@ -48,7 +48,6 @@ def main():
 		init = tf.global_variables_initializer()
 		sess.run(init)
 		for epoch in tqdm(range(epochs)):
-			print(epoch)
 			start = 0
 			batch_size = 128
 			for _ in range(391):
