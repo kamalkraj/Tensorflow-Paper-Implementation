@@ -46,8 +46,8 @@ def main():
 	init,train_op,input_layer,labels,learning_rate,accuracy = get_model()
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
 
-	y_train = y_train.astype('int32').flatten()
-	y_test = y_test.astype('int32').flatten()
+	y_train = y_train.astype('int64').flatten()
+	y_test = y_test.astype('int64').flatten()
 	epochs = 80
 	with tf.Session() as sess:
 		init = tf.global_variables_initializer()
