@@ -45,21 +45,22 @@ def main():
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
 
 	y_train = y_train.astype('int32').flatten()
-	y_test = y_test.astype('int32')
+	y_test = y_test.astype('int32').flatten()
 	epochs = 80
 	with tf.Session() as sess:
 		init = tf.global_variables_initializer()
 		sess.run(init)
 		for epoch in range(epochs):
-			print(epoch,)
+			print("epoch : ",epoch)
 			start = 0
 			batch_size = 128
 			for _ in range(391):
 				x = x_train[start:start+batch_size]
 				y = y_train[start:start+batch_size]
 				start += batch_size
-				loss = sess.run(train_op,feed_dict={input_layer:x,labels:y,learning_rate:0.02})
-			print(loss)
+				sess.run(train_op,feed_dict={input_layer:x,labels:y,learning_rate:0.02})
+			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test})
+			print(acc)
 		# sess.run(train_op,feed_dict={input_layer:})
 
 if __name__ == '__main__':
