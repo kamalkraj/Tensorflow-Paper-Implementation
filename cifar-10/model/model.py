@@ -7,7 +7,7 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 def LetNet(features,labels,mode):
 	# Input Layer
-	input_layer = features['images']
+	input_layer = tf.div(features['images'],255.)
 
 	# Conv Layer #1
 	conv1 = tf.layers.conv2d(inputs=input_layer,filters=20,kernel_size=[5,5],padding='same',activation=tf.nn.relu)
@@ -55,7 +55,7 @@ def main(*argv):
 	
 	# logging_hook = tf.train.LoggingTensorHook(every_n_iter=50)
 
-	train_input_fn = tf.estimator.inputs.numpy_input_fn(x={"images": x_train.astype('float32')},y=y_train,batch_size=128,num_epochs=20,shuffle=True)
+	train_input_fn = tf.estimator.inputs.numpy_input_fn(x={"images": x_train.astype('float32')},y=y_train,batch_size=128,num_epochs=100,shuffle=True)
 
 	letnet_classifier.train(input_fn=train_input_fn,)
 
