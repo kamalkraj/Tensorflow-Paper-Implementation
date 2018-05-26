@@ -3,7 +3,7 @@ import tensorflow as tf
 from tqdm import tqdm
 
 def get_model(weight_decay=0.0):
-	init = tf.global_variables_initializer()
+	
 	input_layer  = tf.placeholder(tf.float32,shape=[None,32,32,3],name='input_layer')
 	labels = tf.placeholder(tf.int32,shape=[None,],name='labels')
 
@@ -50,6 +50,7 @@ def main():
 	y_test = y_test.astype('int32').flatten()
 	epochs = 80
 	with tf.Session() as sess:
+		init = tf.global_variables_initializer()
 		sess.run(init)
 		for epoch in range(epochs):
 			print("epoch : ",epoch)
