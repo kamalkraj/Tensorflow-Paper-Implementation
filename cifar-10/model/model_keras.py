@@ -37,7 +37,7 @@ def main():
     weight_decay = 5e-4
     for layer in model.layers:
         if hasattr(layer, 'kernel_regularizer'):
-            layer.kernel_regularizer= l2(weight_decay)
+            layer.kernel_regularizer = l2(weight_decay)
     sgd = SGD(lr=0.02, momentum=0.9)
     model.compile(
         optimizer=sgd, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
