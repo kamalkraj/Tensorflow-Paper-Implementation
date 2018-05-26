@@ -37,7 +37,7 @@ def get_model(weight_decay=0.0):
 
 	# classes = tf.argmax(input=logits,axis=1)
 	# accuracy = tf.metrics.accuracy(labels=labels, predictions=classes)
-	correct_prediction = tf.equal(tf.nn.softmax(logits),labels)
+	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),labels)
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 	return train_op,input_layer,labels,learning_rate,accuracy
@@ -60,7 +60,7 @@ def main():
 				x = x_train[start:start+batch_size]
 				y = y_train[start:start+batch_size]
 				start += batch_size
-				print(sess.run([train_op,accuracy],feed_dict={input_layer:x,labels:y,learning_rate:0.001}))
+				sess.run([train_op],feed_dict={input_layer:x,labels:y,learning_rate:0.001})
 			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test,learning_rate:0.001})
 			print(acc)
 		# sess.run(train_op,feed_dict={input_layer:})
