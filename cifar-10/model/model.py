@@ -38,7 +38,7 @@ def LetNet(features,labels,mode):
 	loss = tf.losses.sparse_softmax_cross_entropy(labels=labels,logits=logits)
 
 	if mode == tf.estimator.ModeKeys.TRAIN:
-		optimizer = tf.train.MomentumOptimizer(learning_rate=0.005,momentum=0.9)
+		optimizer = tf.train.MomentumOptimizer(learning_rate=0.001,momentum=0.9)
 		train_op = optimizer.minimize(loss=loss,global_step=tf.train.get_global_step())
 		return tf.estimator.EstimatorSpec(mode=mode,loss=loss,train_op=train_op)
 	
