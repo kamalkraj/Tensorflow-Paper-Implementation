@@ -59,7 +59,7 @@ def main():
 				y = y_train[start:start+batch_size]
 				start += batch_size
 				sess.run(train_op,feed_dict={input_layer:x,labels:y,learning_rate:0.02})
-			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test})
+			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test,learning_rate:0.02})
 			print(acc)
 		# sess.run(train_op,feed_dict={input_layer:})
 
