@@ -61,7 +61,7 @@ def main(*argv):
 
 	eval_input_fn = tf.estimator.inputs.numpy_input_fn(x={"x": eval_data},y=eval_labels,num_epochs=1,shuffle=False)
 	eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)
-	print(eval_results)
+	# print(eval_results)
 
 if __name__ == "__main__":
   tf.app.run()
