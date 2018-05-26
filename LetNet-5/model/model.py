@@ -43,7 +43,7 @@ def cnn_model_fn(features,labels,mode):
 
 	return tf.estimator.EstimatorSpec(mode=mode, loss=loss, eval_metric_ops=eval_metrics_ops)
 	
-def main():
+def main(*argv):
 	mnist = tf.contrib.learn.datasets.load_dataset("mnist")
 	train_data = mnist.train.images # Returns np.array
 	train_labels = np.asarray(mnist.train.labels, dtype=np.int32)
