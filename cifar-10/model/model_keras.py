@@ -3,6 +3,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPool2D, Dropout, Flatten
 from keras.optimizers import SGD
 from keras.callbacks import LearningRateScheduler
+from keras.regularizers import l2
 
 
 def get_model():
@@ -33,6 +34,10 @@ def main():
     x_train = x_train/255.
     x_test = x_test/255.
     model = get_model()
+    weight_decay = 5e-4
+    for layer in model.layers:
+        if hasattr(layer, 'kernel_regularizer'):
+            layer.kernel_regularizer= l2(weight_decay)
     sgd = SGD(lr=0.02, momentum=0.9)
     model.compile(
         optimizer=sgd, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
