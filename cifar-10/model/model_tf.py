@@ -40,10 +40,10 @@ def get_model(weight_decay=0.0):
 	# correct_prediction = tf.equal(tf.argmax(logits, 1),labels)
 	# accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-	return init,train_op,input_layer,labels,learning_rate,accuracy
+	return train_op,input_layer,labels,learning_rate,accuracy
 
 def main():
-	init,train_op,input_layer,labels,learning_rate,accuracy = get_model()
+	train_op,input_layer,labels,learning_rate,accuracy = get_model()
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
 
 	y_train = y_train.astype('int64').flatten()
