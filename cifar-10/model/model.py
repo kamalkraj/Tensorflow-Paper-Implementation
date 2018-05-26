@@ -55,7 +55,7 @@ def main(*argv):
 	
 	# logging_hook = tf.train.LoggingTensorHook(every_n_iter=50)
 
-	train_input_fn = tf.estimator.inputs.numpy_input_fn(x={"images": x_train.astype('float32')},y=y_train,batch_size=50,num_epochs=80,shuffle=True)
+	train_input_fn = tf.estimator.inputs.numpy_input_fn(x={"images": x_train.astype('float32')},y=y_train,batch_size=128,num_epochs=80,shuffle=True)
 
 	letnet_classifier.train(input_fn=train_input_fn,)
 
