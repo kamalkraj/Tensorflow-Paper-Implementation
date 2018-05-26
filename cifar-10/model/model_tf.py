@@ -3,7 +3,7 @@ import tensorflow as tf
 from tqdm import tqdm
 
 def get_model(weight_decay=0.0):
-
+	init = tf.global_variables_initializer()
 	input_layer  = tf.placeholder(tf.float32,shape=[None,32,32,3],name='input_layer')
 	labels = tf.placeholder(tf.int32,shape=[None,],name='labels')
 
@@ -38,17 +38,16 @@ def get_model(weight_decay=0.0):
 	classes = tf.argmax(input=logits,axis=1)
 	accuracy = tf.metrics.accuracy(labels=labels, predictions=classes)
 
-	return train_op,input_layer,labels,learning_rate,accuracy
+	return init,train_op,input_layer,labels,learning_rate,accuracy
 
 def main():
-	train_op,input_layer,labels,learning_rate,accuracy = get_model()
+	init,train_op,input_layer,labels,learning_rate,accuracy = get_model()
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
 
 	y_train = y_train.astype('int32').flatten()
 	y_test = y_test.astype('int32').flatten()
 	epochs = 80
 	with tf.Session() as sess:
-		init = tf.global_variables_initializer()
 		sess.run(init)
 		for epoch in range(epochs):
 			print("epoch : ",epoch)
@@ -59,7 +58,6 @@ def main():
 				y = y_train[start:start+batch_size]
 				start += batch_size
 				sess.run(train_op,feed_dict={input_layer:x,labels:y,learning_rate:0.02})
-			sess.run(tf.global_variables_initializer())
 			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test,learning_rate:0.02})
 			print(acc)
 		# sess.run(train_op,feed_dict={input_layer:})
