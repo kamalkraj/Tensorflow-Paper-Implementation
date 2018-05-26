@@ -37,8 +37,8 @@ def get_model(weight_decay=0.0):
 
 	# classes = tf.argmax(input=logits,axis=1)
 	# accuracy = tf.metrics.accuracy(labels=labels, predictions=classes)
-	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),labels)
-	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+	prediction = tf.argmax(tf.nn.softmax(logits),1)
+	accuracy = tf.metrics.accuracy(predictions=prediction,labels=labels)
 
 	return train_op,input_layer,labels,learning_rate,accuracy
 
