@@ -38,7 +38,7 @@ def LetNet(features,labels,mode):
 	loss = tf.losses.sparse_softmax_cross_entropy(labels=labels,logits=logits)
 
 	if mode == tf.estimator.ModeKeys.TRAIN:
-		optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
+		optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.02)
 		train_op = optimizer.minimize(loss=loss,global_step=tf.train.get_global_step())
 		return tf.estimator.EstimatorSpec(mode=mode,loss=loss,train_op=train_op)
 	
@@ -55,7 +55,7 @@ def main(*argv):
 	
 	# logging_hook = tf.train.LoggingTensorHook(every_n_iter=50)
 
-	train_input_fn = tf.estimator.inputs.numpy_input_fn(x={"images": x_train.astype('float32')},y=y_train,batch_size=128,num_epochs=80,shuffle=True)
+	train_input_fn = tf.estimator.inputs.numpy_input_fn(x={"images": x_train.astype('float32')},y=y_train,batch_size=128,num_epochs=40,shuffle=True)
 
 	letnet_classifier.train(input_fn=train_input_fn,)
 
