@@ -5,7 +5,7 @@ from tqdm import tqdm
 def get_model(weight_decay=0.0):
 	
 	input_layer  = tf.placeholder(tf.float32,shape=[None,32,32,3],name='input_layer')
-	labels = tf.placeholder(tf.int32,shape=[None,],name='labels')
+	labels = tf.placeholder(tf.int64,shape=[None,],name='labels')
 
 	learning_rate = tf.placeholder(tf.int32)
 	# Conv Layer #1
