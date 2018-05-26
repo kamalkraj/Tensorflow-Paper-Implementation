@@ -35,7 +35,10 @@ def get_model(weight_decay=0.0):
 
 	train_op = optimizer.minimize(loss=loss,global_step=tf.train.get_global_step())
 
-	return train_op,input_layer,labels,learning_rate
+	classes = tf.argmax(input=logits,axis=1)
+	accuracy = tf.metrics.accuracy(labels=labels, predictions=classes)
+
+	return train_op,input_layer,labels,learning_rate,accuracy
 
 def main():
 	train_op,input_layer,labels,learning_rate = get_model()
@@ -47,14 +50,16 @@ def main():
 	with tf.Session() as sess:
 		init = tf.global_variables_initializer()
 		sess.run(init)
-		for epoch in tqdm(range(epochs)):
+		for epoch in range(epochs):
+			print(epoch,)
 			start = 0
 			batch_size = 128
 			for _ in range(391):
 				x = x_train[start:start+batch_size]
 				y = y_train[start:start+batch_size]
 				start += batch_size
-				sess.run(train_op,feed_dict={input_layer:x,labels:y,learning_rate:0.02})
+				loss = sess.run(train_op,feed_dict={input_layer:x,labels:y,learning_rate:0.02})
+			print(loss)
 		# sess.run(train_op,feed_dict={input_layer:})
 
 if __name__ == '__main__':
