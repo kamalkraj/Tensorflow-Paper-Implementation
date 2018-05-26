@@ -41,7 +41,7 @@ def get_model(weight_decay=0.0):
 	return train_op,input_layer,labels,learning_rate,accuracy
 
 def main():
-	train_op,input_layer,labels,learning_rate = get_model()
+	train_op,input_layer,labels,learning_rate,accuracy = get_model()
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
 
 	y_train = y_train.astype('int32').flatten()
