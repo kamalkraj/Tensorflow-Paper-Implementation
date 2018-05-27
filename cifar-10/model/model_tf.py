@@ -31,7 +31,7 @@ def main(unused_argv):
 
 	loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels,logits=logits)
 
-	optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.9)
+	optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
 
 	train_op = optimizer.minimize(loss=loss,global_step=tf.train.get_global_step())
 
