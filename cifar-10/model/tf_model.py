@@ -1,11 +1,12 @@
 from keras.datasets import cifar10
 import tensorflow as tf
+from sklearn.preprocessing import OneHotEncoder
 from tf_layers import conv2d,max_pooling2d,dense
 
 def main(unused_argv):
 	def linear(x): return x
 	input_layer  = tf.placeholder(tf.float32,shape=[None,32,32,3],name='input_layer')
-	labels = tf.placeholder(tf.int64,shape=[None,],name='labels')
+	labels = tf.placeholder(tf.int64,shape=[None,10],name='labels')
 
 	conv1 = conv2d(input_layer,3,20,[5,5],tf.nn.relu)
 	pool1 = max_pooling2d(conv1,[2,2],[2,2])
@@ -17,17 +18,22 @@ def main(unused_argv):
 	dense1 = dense(pool2_flat,128,tf.nn.relu)
 	logits = dense(dense1,10,linear)
 
-	loss = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits,labels=labels)
+	loss = tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels)
 	optimizer = tf.train.MomentumOptimizer(learning_rate=0.001,momentum=0.9)
 	train_op = optimizer.minimize(loss=loss)#,global_step=tf.train.get_global_step())
 
-	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),labels)
+	correct_prediction = tf.equal(tf.argmax(logits,1),tf.argmax(labels,1))
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
 
-	y_train = y_train.astype('int64').flatten()
-	y_test = y_test.astype('int64').flatten()
+	y_train = y_train.astype('int64')
+	y_test = y_test.astype('int64')
+	oh = OneHotEncoder(sparse=False)
+	oh.fit(y_train)
+	y_train = oh.transform(y_train)
+	y_test = oh.transform(y_test)
+	# import ipdb; ipdb.set_trace()
 	epochs = 80
 	with tf.Session() as sess:
 		init = tf.global_variables_initializer()
