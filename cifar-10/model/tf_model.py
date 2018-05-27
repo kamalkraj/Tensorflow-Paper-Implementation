@@ -22,7 +22,7 @@ def main(unused_argv):
 	optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
 	train_op = optimizer.minimize(loss=loss)#,global_step=tf.train.get_global_step())
 
-	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),tf.argmax(labels,1))
+	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),labels)
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
