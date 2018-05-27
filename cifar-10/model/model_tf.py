@@ -29,7 +29,7 @@ def main(unused_argv):
 	# Logits Layer
 	logits = tf.layers.dense(inputs=dense,units=10)
 
-	loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels,logits=logits)
+	loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels,logits=logits))
 
 	optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
 
