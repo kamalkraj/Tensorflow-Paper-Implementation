@@ -2,8 +2,8 @@ from keras.datasets import cifar10
 import tensorflow as tf
 from tqdm import tqdm
 
-def get_model(weight_decay=0.0):
-	
+# def get_model(weight_decay=0.0):
+def main(unused_argv):	
 	input_layer  = tf.placeholder(tf.float32,shape=[None,32,32,3],name='input_layer')
 	labels = tf.placeholder(tf.int64,shape=[None,],name='labels')
 
@@ -40,10 +40,10 @@ def get_model(weight_decay=0.0):
 	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),labels)
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-	return train_op,input_layer,labels,learning_rate,accuracy
+	# return train_op,input_layer,labels,learning_rate,accuracy
 
-def main():
-	train_op,input_layer,labels,learning_rate,accuracy = get_model()
+# def main():
+	# train_op,input_layer,labels,learning_rate,accuracy = get_model()
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
 
 	y_train = y_train.astype('int64').flatten()
@@ -66,4 +66,4 @@ def main():
 		# sess.run(train_op,feed_dict={input_layer:})
 
 if __name__ == '__main__':
-	main()
+	tf.app.run()
