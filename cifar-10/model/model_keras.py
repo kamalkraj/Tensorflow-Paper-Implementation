@@ -42,7 +42,7 @@ def main():
     sgd = SGD(lr=0.02, momentum=0.9,nesterov=True)
     # adam = Adam(lr=0.02)
     model.compile(
-        optimizer=adam, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+        optimizer=sgd, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
     lrs = LearningRateScheduler(get_lrs, verbose=1)
     model.fit(x=x_train, y=y_train, batch_size=128, epochs=80, verbose=1,
               shuffle=True, validation_data=(x_test, y_test), callbacks=[lrs])
