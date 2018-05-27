@@ -1,7 +1,7 @@
 from keras.datasets import cifar10
 from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPool2D, Dropout, Flatten
-from keras.optimizers import SGD
+from keras.optimizers import SGD,Adam
 from keras.callbacks import LearningRateScheduler
 from keras.regularizers import l2
 
@@ -40,8 +40,9 @@ def main():
     weight_decay = 0.0   #5e-4
     model = get_model(weight_decay)
     sgd = SGD(lr=0.02, momentum=0.9)
+    adam = Adam(lr=0.02)
     model.compile(
-        optimizer=sgd, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+        optimizer=adam, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
     lrs = LearningRateScheduler(get_lrs, verbose=1)
     model.fit(x=x_train, y=y_train, batch_size=128, epochs=80, verbose=1,
               shuffle=True, validation_data=(x_test, y_test), callbacks=[lrs])
