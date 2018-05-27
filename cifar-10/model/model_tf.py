@@ -29,7 +29,7 @@ def get_model(weight_decay=0.0):
 	# Logits Layer
 	logits = tf.layers.dense(inputs=dense,units=10)
 
-	loss = tf.losses.sparse_softmax_cross_entropy(labels=labels,logits=logits)
+	loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels,logits=logits)
 
 	optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.9)
 
@@ -37,8 +37,8 @@ def get_model(weight_decay=0.0):
 
 	# classes = tf.argmax(input=logits,axis=1)
 	# accuracy = tf.metrics.accuracy(labels=labels, predictions=classes)
-	prediction = tf.argmax(tf.nn.softmax(logits),1)
-	accuracy = tf.metrics.accuracy(predictions=prediction,labels=labels)
+	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),labels)
+	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 	return train_op,input_layer,labels,learning_rate,accuracy
 
