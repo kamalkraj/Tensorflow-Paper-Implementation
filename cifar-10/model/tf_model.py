@@ -19,7 +19,7 @@ def main(unused_argv):
 	logits = dense(dense1,10,linear)
 
 	loss = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits,labels=labels)
-	optimizer = tf.train.AdamOptimizer(learning_rate=0.001,momentum=0.9)
+	optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
 	train_op = optimizer.minimize(loss=loss,global_step=tf.train.get_global_step())
 
 	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),labels)
