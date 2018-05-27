@@ -29,14 +29,10 @@ def main(unused_argv):
 	# Logits Layer
 	logits = tf.layers.dense(inputs=dense,units=10)
 
-	loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels,logits=logits))
+	loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits,labels=labels))
+	optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
+	train_op = optimizer.minimize(loss=loss)#,global_step=tf.train.get_global_step())
 
-	optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-
-	train_op = optimizer.minimize(loss=loss,global_step=tf.train.get_global_step())
-
-	# classes = tf.argmax(input=logits,axis=1)
-	# accuracy = tf.metrics.accuracy(labels=labels, predictions=classes)
 	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),labels)
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
