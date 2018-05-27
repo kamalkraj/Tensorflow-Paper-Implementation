@@ -26,7 +26,8 @@ def main(unused_argv):
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
-
+	x_train = x_train/255.
+	x_test = x_test/255.
 	y_train = y_train.astype('int64').flatten()
 	y_test = y_test.astype('int64').flatten()
 	epochs = 80

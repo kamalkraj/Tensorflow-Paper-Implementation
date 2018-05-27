@@ -43,6 +43,8 @@ def main(unused_argv):
 	(x_train,y_train) ,(x_test,y_test) = cifar10.load_data()
 	y_train = y_train.astype('int64').flatten()
 	y_test = y_test.astype('int64').flatten()
+	x_train = x_train/255.
+	x_test = x_test/255.
 	epochs = 80
 	with tf.Session() as sess:
 		init = tf.global_variables_initializer()
