@@ -39,8 +39,8 @@ def main():
     x_test = x_test/255.
     weight_decay = 0.0   #5e-4
     model = get_model(weight_decay)
-    sgd = SGD(lr=0.02, momentum=0.9)
-    adam = Adam(lr=0.02)
+    sgd = SGD(lr=0.02, momentum=0.9,nesterov=True)
+    # adam = Adam(lr=0.02)
     model.compile(
         optimizer=adam, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
     lrs = LearningRateScheduler(get_lrs, verbose=1)
