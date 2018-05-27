@@ -19,7 +19,7 @@ def main(unused_argv):
 	logits = dense(dense1,10,linear)
 
 	loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels))
-	optimizer = tf.train.MomentumOptimizer(learning_rate=0.001,momentum=0.9)
+	optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
 	train_op = optimizer.minimize(loss=loss)#,global_step=tf.train.get_global_step())
 
 	correct_prediction = tf.equal(tf.argmax(logits,1),tf.argmax(labels,1))
@@ -33,7 +33,6 @@ def main(unused_argv):
 	oh.fit(y_train)
 	y_train = oh.transform(y_train)
 	y_test = oh.transform(y_test)
-	# import ipdb; ipdb.set_trace()
 	epochs = 80
 	with tf.Session() as sess:
 		init = tf.global_variables_initializer()
