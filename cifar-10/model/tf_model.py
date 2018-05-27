@@ -18,7 +18,7 @@ def main(unused_argv):
 	dense1 = dense(pool2_flat,128,tf.nn.relu)
 	logits = dense(dense1,10,linear)
 
-	loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits,labels=labels))
+	loss = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits,labels=labels)
 	optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
 	train_op = optimizer.minimize(loss=loss)#,global_step=tf.train.get_global_step())
 
