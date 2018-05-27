@@ -37,7 +37,7 @@ def main():
     (x_train, y_train), (x_test, y_test) = cifar10.load_data()
     x_train = x_train/255.
     x_test = x_test/255.
-    weight_decay = 0.0   #5e-4
+    weight_decay = 5e-4   #5e-4
     model = get_model(weight_decay)
     sgd = SGD(lr=0.02, momentum=0.9,nesterov=True)
     # adam = Adam(lr=0.02)
