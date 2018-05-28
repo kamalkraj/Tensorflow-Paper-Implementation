@@ -53,8 +53,8 @@ def main(unused_argv):
 				x = x_train[start:start+batch_size]
 				y = y_train[start:start+batch_size] 
 				start += batch_size
-				sess.run([train_op],feed_dict={input_layer:x,labels:y,learning_rate:get_lrs(epoch)})
-			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test,learning_rate:0.2})
+				sess.run([train_op],feed_dict={input_layer:x,labels:y,learning_rate:[get_lrs(epoch)]})
+			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test,learning_rate:[0.2]})
 			print(acc)
 
 if __name__ == '__main__':
