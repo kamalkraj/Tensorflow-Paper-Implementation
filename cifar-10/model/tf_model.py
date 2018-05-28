@@ -16,7 +16,7 @@ def main(unused_argv):
 	input_layer  = tf.placeholder(tf.float32,shape=[None,32,32,3],name='input_layer')
 	labels = tf.placeholder(tf.int64,shape=[None,],name='labels')
 
-	learning_rate = tf.placeholder(tf.float32,shape=[None],name='lr')
+	learning_rate = tf.placeholder(tf.float32,name='lr')
 
 	conv1 = conv2d(input_layer,3,20,[5,5],tf.nn.relu)
 	pool1 = max_pooling2d(conv1,[2,2],[2,2])
@@ -53,8 +53,8 @@ def main(unused_argv):
 				x = x_train[start:start+batch_size]
 				y = y_train[start:start+batch_size] 
 				start += batch_size
-				sess.run([train_op],feed_dict={input_layer:x,labels:y,learning_rate:[get_lrs(epoch)]})
-			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test,learning_rate:[0.2]})
+				sess.run([train_op],feed_dict={input_layer:x,labels:y,learning_rate:get_lrs(epoch)})
+			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test,learning_rate:0.02})
 			print(acc)
 
 if __name__ == '__main__':
