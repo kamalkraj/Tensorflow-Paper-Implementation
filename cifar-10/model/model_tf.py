@@ -2,6 +2,13 @@ from keras.datasets import cifar10
 import tensorflow as tf
 from tqdm import tqdm
 
+def get_lrs(epoch):
+    if epoch < 40:
+        return float(0.02)
+    elif epoch < 60:
+        return float(0.005)
+    else:
+        return float(0.001)
 # def get_model(weight_decay=0.0):
 def main(unused_argv):	
 	input_layer  = tf.placeholder(tf.float32,shape=[None,32,32,3],name='input_layer')
@@ -30,7 +37,7 @@ def main(unused_argv):
 	logits = tf.layers.dense(inputs=dense,units=10)
 
 	loss = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits,labels=labels)
-	optimizer = tf.train.MomentumOptimizer(learning_rate=0.001,momentum=0.9)
+	optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.9)
 	train_op = optimizer.minimize(loss=loss,global_step=tf.train.get_global_step())
 
 	correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(logits),1),labels)
@@ -57,7 +64,7 @@ def main(unused_argv):
 				x = x_train[start:start+batch_size]
 				y = y_train[start:start+batch_size]
 				start += batch_size
-				sess.run([train_op],feed_dict={input_layer:x,labels:y,learning_rate:0.001})
+				sess.run([train_op],feed_dict={input_layer:x,labels:y,learning_rate:get_lrs(epoch)})
 			acc = sess.run(accuracy,feed_dict={input_layer:x_test,labels:y_test,learning_rate:0.001})
 			print(acc)
 		# sess.run(train_op,feed_dict={input_layer:})
